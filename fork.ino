@@ -19,28 +19,28 @@ int Dcmotorpin2 = 10;
 #define MAX_MOTOR_SPEED 200 // Its value can range from 0-255. 255 is maximum speed.
 
 void notify() {
-  if (Ps3.data.button.up) { // Move DC motor Forward
-    rotateDCMotor(true);
-  } else if (Ps3.data.button.down) { // Move DC motor Backward
-    rotateDCMotor(false);
-  } else { // Stop the DC motor
-    stopDCMotor();
-  }
-
-  if (Ps3.data.analog.stick.l2) { // Move car Forward
-    rotateMotor(MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
-  } else if (Ps3.data.analog.stick.r2) { // Move car Backward
-    rotateMotor(-MAX_MOTOR_SPEED, -MAX_MOTOR_SPEED);
-  } else if (Ps3.data.button.left) { // Turn car Left
-    rotateMotor(MAX_MOTOR_SPEED, -MAX_MOTORSPEED);
-  } else if (Ps3.data.button.right) { // Turn car Right
-    rotateMotor(-MAX_MOTORSPEED, MAX_MOTOR_SPEED);
+  // Control forward and backward motion with the left analog stick
+  int leftStickY = Ps3.data.analog.stick.ly;
+  if (leftStickY > 0) { // Move car Forward
+    rotateMotor(leftStickY, leftStickY);
+  } else if (leftStickY < 0) { // Move car Backward
+    rotateMotor(leftStickY, leftStickY);
   } else { // Stop the car
     rotateMotor(0, 0);
   }
 
-  delay(10);
+  // Control left and right motion with the right analog stick
+  int rightStickX = Ps3.data.analog.stick.rx;
+  if (rightStickX > 0) { // Turn car Right
+    rotateMotor(rightStickX, -rightStickX);
+  } else if (rightStickX < 0) { // Turn car Left
+    rotateMotor(-rightStickX, rightStickX);
+  } else { // Stop the car
+    rotateMotor(0, 0);
+  }
+    delay(10);
 }
+ 
 
 void onConnect() {
   Serial.println("Connected!.");

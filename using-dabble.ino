@@ -39,9 +39,9 @@ void notify() {
   } else if (yAxis < -50) { // Move car Backward
     rotateMotor(-MAX_MOTOR_SPEED, -MAX_MOTOR_SPEED);
   } else if (xAxis < -50) { // Turn car Left
-    rotateMotor(MAX_MOTOR_SPEED, 0);
+    rotateMotor(MAX_MOTOR_SPEED, -MAX_MOTOR_SPEED);
   } else if (xAxis > 50) { // Turn car Right
-    rotateMotor(0, MAX_MOTOR_SPEED);
+    rotateMotor(-MAX_MOTOR_SPEED, MAX_MOTOR_SPEED);
   } else { // Stop the car
     rotateMotor(0, 0);
   }
